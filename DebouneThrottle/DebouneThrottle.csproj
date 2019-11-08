@@ -10,6 +10,14 @@ The Throttle dispatcher provides one Action invoking at a specific time interval
     <RepositoryUrl>https://github.com/coddicat/DebouneThrottle</RepositoryUrl>
     <PackageProjectUrl>https://github.com/coddicat/DebouneThrottle</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
