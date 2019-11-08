@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>The Debounce dispatcher delays the invoking of Action until the calls stopped for a predetermined interval.
+The Throttle dispatcher provides one Action invoking at a specific time interval.
+</Description>
+    <Copyright>Rodion Shlomo Solomonyk. https://www.coddicat.com</Copyright>
+    <RepositoryUrl>https://github.com/coddicat/DebouneThrottle</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/coddicat/DebouneThrottle</PackageProjectUrl>
+    <RepositoryType>Git</RepositoryType>
+  </PropertyGroup>
+
+</Project>
