@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DebouneThrottle
+namespace DebounceThrottle
 {
     /// <summary>
     /// The debounce dispatcher delays the invoking of Action until the calls stopped for a predetermined interval

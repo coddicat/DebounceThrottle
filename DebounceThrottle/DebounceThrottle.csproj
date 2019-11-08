@@ -7,8 +7,8 @@
 The Throttle dispatcher provides one Action invoking at a specific time interval.
 </Description>
     <Copyright>Rodion Shlomo Solomonyk. https://www.coddicat.com</Copyright>
-    <RepositoryUrl>https://github.com/coddicat/DebouneThrottle</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/coddicat/DebouneThrottle</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/coddicat/DebounceThrottle</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/coddicat/DebounceThrottle</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>

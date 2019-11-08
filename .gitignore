@@ -3,6 +3,6 @@
 ################################################################################
 
 /.vs
-/DebouneThrottle/bin/Debug
-/DebouneThrottle/obj
-/DebouneThrottle/bin/Release/netstandard2.0
+/DebounceThrottle/bin/Debug
+/DebounceThrottle/obj
+/DebounceThrottle/bin/Release/netstandard2.0

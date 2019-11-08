@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DebouneThrottle
+namespace DebounceThrottle
 {
     /// <summary>
     /// The Throttle dispatcher provides one Action invoking at a specific time interval
