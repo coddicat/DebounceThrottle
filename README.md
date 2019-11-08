@@ -1,5 +1,5 @@
 //C# DebounceThrottle
-//C# Debounce and Throttle dispatchers
+C#
 
 class Program
 {
