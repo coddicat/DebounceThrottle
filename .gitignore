@@ -6,3 +6,7 @@
 /DebounceThrottle/bin/Debug
 /DebounceThrottle/obj
 /DebounceThrottle/bin/Release/netstandard2.0
+/Demo/DebounceDemo/bin
+/Demo/DebounceDemo/obj
+/Demo/ThrottleDemo/bin
+/Demo/ThrottleDemo/obj

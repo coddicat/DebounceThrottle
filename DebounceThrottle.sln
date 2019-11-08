@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebounceThrottle", "DebounceThrottle\DebounceThrottle.csproj", "{512B56F0-03F0-4A83-A14D-00D5BC7C4EF8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebounceDemo", "Demo\DebounceDemo\DebounceDemo.csproj", "{0F7DD0FB-FFF4-4B90-90CB-314890B428AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{67B5B0C5-5BCC-4D82-9E82-C18B5CF63D39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThrottleDemo", "Demo\ThrottleDemo\ThrottleDemo.csproj", "{8313817E-6492-491B-AC1C-7BC9EB09B204}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,21 @@ Global
 		{512B56F0-03F0-4A83-A14D-00D5BC7C4EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{512B56F0-03F0-4A83-A14D-00D5BC7C4EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{512B56F0-03F0-4A83-A14D-00D5BC7C4EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7DD0FB-FFF4-4B90-90CB-314890B428AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7DD0FB-FFF4-4B90-90CB-314890B428AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7DD0FB-FFF4-4B90-90CB-314890B428AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7DD0FB-FFF4-4B90-90CB-314890B428AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8313817E-6492-491B-AC1C-7BC9EB09B204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8313817E-6492-491B-AC1C-7BC9EB09B204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8313817E-6492-491B-AC1C-7BC9EB09B204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8313817E-6492-491B-AC1C-7BC9EB09B204}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F7DD0FB-FFF4-4B90-90CB-314890B428AD} = {67B5B0C5-5BCC-4D82-9E82-C18B5CF63D39}
+		{8313817E-6492-491B-AC1C-7BC9EB09B204} = {67B5B0C5-5BCC-4D82-9E82-C18B5CF63D39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1395CA7E-B5F5-485D-BFD0-A185302DF5E8}
