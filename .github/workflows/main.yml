@@ -1,4 +1,4 @@
-name: Build and Deploy NuGet Package
+name: Build and Deploy Specific Project in Solution
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '5.0.x'
+        dotnet-version: '6.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -27,14 +27,16 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-    - name: Pack
-      run: dotnet pack --configuration Release --no-build -o out
+    - name: Pack specific project
+      run: dotnet pack DebounceThrottle/DebounceThrottle.csproj --configuration Release --no-build -o out
 
-    - name: Deploy to NuGet
+    - name: Setup NuGet Source and API Key
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '5.0.x'
+        dotnet-version: '6.0.x'
         source-url: https://api.nuget.org/v3/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
+
+    - name: Deploy to NuGet
       run: dotnet nuget push out/*.nupkg --skip-duplicate
