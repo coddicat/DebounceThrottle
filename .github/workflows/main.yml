@@ -3,7 +3,7 @@ name: Build and Deploy Specific Project in Solution
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
