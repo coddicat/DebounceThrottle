@@ -12,4 +12,11 @@ The Throttle dispatcher, on the other hand, limits the invocation of an action t
     <RepositoryType>Git</RepositoryType>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
