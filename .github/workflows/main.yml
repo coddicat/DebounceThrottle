@@ -31,13 +31,5 @@ jobs:
     - name: Pack specific project
       run: dotnet pack DebounceThrottle/DebounceThrottle.csproj --configuration Release --no-build -o out
 
-    - name: Setup NuGet Source and API Key
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.x'
-        source-url: https://api.nuget.org/v3/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
-
     - name: Deploy to NuGet
-      run: dotnet nuget push out/*.nupkg --skip-duplicate
+      run: dotnet nuget push out/*.nupkg --skip-duplicate --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
