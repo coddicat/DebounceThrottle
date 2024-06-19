@@ -22,14 +22,14 @@ namespace DebounceThrottle
         /// <summary>
         /// Method manages the debouncing of the function invocation.
         /// </summary>
-        /// <param name="function">The function returns Task to be invoked asynchronously</param>
+        /// <param name="function">The action to be invoked</param>
         /// <param name="cancellationToken">An optional CancellationToken</param>
         /// <returns>Returns Task to be executed with minimal delay</returns>
-        public Task DebounceAsync(Func<Task> function, CancellationToken cancellationToken = default)
+        public Task DebounceAsync(Action action, CancellationToken cancellationToken = default)
         {
-            return base.DebounceAsync(async () =>
+            return base.DebounceAsync(() =>
             {
-                await function.Invoke();
+                action.Invoke();
                 return true;
             }, cancellationToken);
         }
@@ -41,13 +41,11 @@ namespace DebounceThrottle
         /// <param name="cancellationToken">An optional CancellationToken</param>
         public void Debounce(Action action, CancellationToken cancellationToken = default)
         {
-            Func<Task<bool>> actionAsync = () => Task.Run(() =>
+            base.DebounceAsync(() =>
             {
                 action.Invoke();
                 return true;
             }, cancellationToken);
-
-            Task _ = DebounceAsync(actionAsync, cancellationToken);
         }
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace DebounceThrottle
 {
     /// <summary>
-    /// The Debounce dispatcher delays the invocation of an action until a predetermined interval has elapsed since the last call. This ensures that the action is only invoked once after the calls have stopped for the specified duration.
+    /// The Debounce thread dispatcher delays the invocation of an action with high accuracy, ensuring the action is only executed after a specified interval has precisely elapsed since the last call. This mechanism guarantees that the action is triggered only once, even after multiple calls, achieving reliable timing and precise control over action execution.
     /// </summary>
-    /// <typeparam name="T">Type of the debouncing Task</typeparam>
-    public class DebounceDispatcher<T> : IDisposable
+    public class DebounceThreadDispatcher : IDisposable
     {
-        private Task<T> _waitingTask;
-        private Func<T> _functToInvoke;
+        private Thread _waitingThread;
+        private Action _actionToInvoke;
         private object _locker = new object();
 
         private readonly Stopwatch _invocationStopWatch = new Stopwatch();
@@ -37,12 +35,12 @@ namespace DebounceThrottle
             TimeLeftToMaxDelay > TimeSpan.Zero;
 
         /// <summary>
-        /// Debouncing the execution of action.
+        /// Debouncing the execution of asynchronous tasks.
         /// It ensures that a function is invoked only once within a specified interval, even if multiple invocations are requested.
         /// </summary>
         /// <param name="interval">The minimum interval between invocations of the debounced function.</param>
         /// <param name="maxDelay">The maximum delay for an execution since the first trigger, after which the action must be executed. Can be null.</param>
-        public DebounceDispatcher(TimeSpan interval, TimeSpan? maxDelay = null)
+        public DebounceThreadDispatcher(TimeSpan interval, TimeSpan? maxDelay = null)
         {
             _isDisposed = false;
             _interval = interval;
@@ -52,10 +50,10 @@ namespace DebounceThrottle
         /// <summary>
         /// DebounceAsync method manages the debouncing of the function invocation.
         /// </summary>
-        /// <param name="function">The function to be invoked</param>
+        /// <param name="action">The function to be invoked</param>
         /// <param name="cancellationToken">An optional CancellationToken</param>
         /// <returns>Returns Task to be executed with minimal delay</returns>
-        public Task<T> DebounceAsync(Func<T> function, CancellationToken cancellationToken = default)
+        public Thread Debounce(Action action, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -66,7 +64,7 @@ namespace DebounceThrottle
                     throw new ObjectDisposedException(GetType().Name);
                 }               
                
-                return HandleAsync(function, cancellationToken);
+                return HandleAsync(action, cancellationToken);
             }
             finally
             {
@@ -74,47 +72,47 @@ namespace DebounceThrottle
             }            
         }
 
-        private Task<T> HandleAsync(Func<T> function, CancellationToken cancellationToken = default)
+        private Thread HandleAsync(Action action, CancellationToken cancellationToken = default)
         {
             lock (_locker)
             {
-                _functToInvoke = function;
+                _actionToInvoke = action;
                 _invocationStopWatch.Restart();
                 _initialStopWatch.Start();
 
-                if (_waitingTask != null)
+                if (_waitingThread != null)
                 {
-                    return _waitingTask;
-                }
+                    return _waitingThread;
+                }                
 
-                _waitingTask = Task.Run(() =>
+                _waitingThread = new Thread(() =>
                 {
                     do
                     {
                         if (_isDisposed)
                         {
-                            return default;
+                            return;
                         }
 
                         cancellationToken.ThrowIfCancellationRequested();
                     }
                     while (DelayCondition);
-                   
-                    return Invoke();
 
-                }, cancellationToken);
+                    Invoke();
+                });
 
-                return _waitingTask;
+                _waitingThread.Start();
+
+                return _waitingThread;
             }
         }
 
-        private T Invoke()
+        private void Invoke()
         {
-            T res;
             try
             {
                 _initialStopWatch.Reset();
-                res = _functToInvoke.Invoke();
+                _actionToInvoke.Invoke();
             }
             catch (Exception)
             {
@@ -124,11 +122,10 @@ namespace DebounceThrottle
             {
                 lock (_locker)
                 {
-                    _functToInvoke = null;
-                    _waitingTask = null;
+                    _actionToInvoke = null;
+                    _waitingThread = null;
                 }
             }
-            return res;
         }
 
         public void Dispose()
@@ -137,14 +134,10 @@ namespace DebounceThrottle
             GC.SuppressFinalize(this);
         }
 
-        public T FlushAndDispose()
+        public void FlushAndDispose()
         {
-            T res = _functToInvoke == null 
-                ? default 
-                : _functToInvoke.Invoke();
-
+            _actionToInvoke?.Invoke();
             Dispose();
-            return res;
         }
 
         protected virtual void Dispose(bool disposing)

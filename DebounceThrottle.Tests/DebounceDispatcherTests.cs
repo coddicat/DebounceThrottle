@@ -7,10 +7,10 @@
         {
             var debounceDispatcher = new DebounceDispatcher<int>(TimeSpan.FromMilliseconds(100));
             int counter = 0;
-            Func<Task<int>> functToInvoke = async () =>
+            Func<int> functToInvoke = () =>
             {
                 counter++;
-                return await Task.FromResult(counter);
+                return counter;
             };
 
             var tasks = new[]
@@ -30,10 +30,10 @@
         {
             var debounceDispatcher = new DebounceDispatcher<int>(TimeSpan.FromMilliseconds(100));
             int counter = 0;
-            Func<Task<int>> functToInvoke = async () =>
+            Func<int> functToInvoke = () =>
             {
                 counter++;
-                return await Task.FromResult(counter);
+                return counter;
             };
             Task<int> CallDebounceAsyncAfterDelay(int delay)
             {
