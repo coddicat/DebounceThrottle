@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>DebounceThrottle</PackageId>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <Description>The Debounce dispatcher delays the invocation of an action until a predetermined interval has elapsed since the last call. This ensures that the action is only invoked once after the calls have stopped for the specified duration.
 The Throttle dispatcher, on the other hand, limits the invocation of an action to a specific time interval. This means that the action will only be executed once within the given time frame, regardless of how many times it is called.
 </Description>

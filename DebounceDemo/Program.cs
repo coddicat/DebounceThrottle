@@ -2,21 +2,18 @@
 using System.Diagnostics;
 
 Console.WriteLine("Enter text and see debounce effect, press ESC to exit");
-
 string str = "";
 using var debounceDispatcher = new DebounceDispatcher(
-    interval: TimeSpan.FromSeconds(1),
-    maxDelay: TimeSpan.FromSeconds(5));
+    interval: TimeSpan.FromMilliseconds(500),
+    maxDelay: TimeSpan.FromSeconds(3));
 
 var initStopWatch = new Stopwatch();
 var lastStopWatch = new Stopwatch();
 while (true)
 {
     var key = Console.ReadKey(true);
-
     //trigger when to stop and exit
     if (key.Key == ConsoleKey.Escape) break;
-
     str += key.KeyChar;
 
     initStopWatch.Start();
@@ -32,7 +29,5 @@ while (true)
         lastStopWatch.Reset();        
     });
 }
-
 debounceDispatcher.FlushAndDispose();
-
 Console.WriteLine("Finished");
