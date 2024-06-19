@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,18 +17,17 @@ namespace DebounceThrottle
         private readonly bool _resetIntervalOnException;
         private readonly object _locker = new object();
         private Task<T> _lastTask;
-        private DateTime? _invokeTime;
+        private readonly Stopwatch _invocationStopWatch = new Stopwatch();
         private bool _busy;
         private bool _isDisposed;
         private readonly SemaphoreSlim _sync = new SemaphoreSlim(1, 1);
 
         private bool ShouldWait =>
-            _invokeTime.HasValue &&
-            TimeLeftToInvoke < _interval && 
-            !_isDisposed;
+            !_isDisposed &&
+            TimeLeftToInvoke < _interval;
 
         private TimeSpan TimeLeftToInvoke =>
-            DateTime.UtcNow - _invokeTime.Value;
+            _invocationStopWatch.Elapsed;            
 
 
         /// <summary>
@@ -76,9 +76,7 @@ namespace DebounceThrottle
         public Task<T> HandleAsync(Func<Task<T>> function, CancellationToken cancellationToken = default)
         {
             lock (_locker)
-            {
-                DateTime now = DateTime.UtcNow;
-
+            {                
                 if (_lastTask != null && (_busy || ShouldWait))
                 {
                     return _lastTask;
@@ -90,7 +88,8 @@ namespace DebounceThrottle
                 }
 
                 _busy = true;
-                _invokeTime = DateTime.UtcNow;
+
+                _invocationStopWatch.Restart();
 
                 _lastTask = function.Invoke();
 
@@ -98,7 +97,7 @@ namespace DebounceThrottle
                 {
                     if (_delayAfterExecution)
                     {
-                        _invokeTime = DateTime.UtcNow;
+                        _invocationStopWatch.Restart();
                     }
                     _busy = false;
                 }, cancellationToken);
@@ -108,7 +107,7 @@ namespace DebounceThrottle
                     _lastTask.ContinueWith((task, obj) =>
                     {
                         _lastTask = null;
-                        _invokeTime = null;
+                        _invocationStopWatch.Reset();
                     }, cancellationToken, TaskContinuationOptions.OnlyOnFaulted);
                 }
 
