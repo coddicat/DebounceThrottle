@@ -52,7 +52,7 @@ namespace DebounceThrottle
         /// </summary>
         /// <param name="action">The function to be invoked</param>
         /// <param name="cancellationToken">An optional CancellationToken</param>
-        /// <returns>Returns Task to be executed with minimal delay</returns>
+        /// <returns>Returns Thread to be executed with minimal delay</returns>
         public Thread Debounce(Action action, CancellationToken cancellationToken = default)
         {
             try
