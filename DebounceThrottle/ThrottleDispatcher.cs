@@ -10,7 +10,7 @@ namespace DebounceThrottle
     public class ThrottleDispatcher : ThrottleDispatcher<bool>
     {
         public ThrottleDispatcher(
-            int interval,
+            TimeSpan interval,
             bool delayAfterExecution = false,
             bool resetIntervalOnException = false)
             : base(interval, delayAfterExecution, resetIntervalOnException)

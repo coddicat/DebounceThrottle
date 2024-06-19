@@ -5,7 +5,7 @@ public class ThrottleDisaptcherTests
     [Fact]
     public async Task ThrottleDispatcher_ThrottleAsync_InvokesFunction()
     {
-        var dispatcher = new ThrottleDispatcher<int>(10);
+        var dispatcher = new ThrottleDispatcher<int>(TimeSpan.FromMilliseconds(10));
         int result = await dispatcher.ThrottleAsync(() => Task.FromResult(42));
         Assert.Equal(42, result);
     }   
@@ -14,7 +14,7 @@ public class ThrottleDisaptcherTests
     public async Task ThrottleDispatcher_ThrottleAsync()
     {
         int counter = 0;
-        var dispatcher = new ThrottleDispatcher<int>(100);
+        var dispatcher = new ThrottleDispatcher<int>(TimeSpan.FromMilliseconds(100));
         DateTime startTime = DateTime.UtcNow;
         List<Task<int>> tasks = new List<Task<int>>();
         Func<Task<int>> functToInvoke = () =>
@@ -45,7 +45,7 @@ public class ThrottleDisaptcherTests
     public async Task ThrottleDispatcher_ThrottleDelayAfterExecutionAsync()
     {
         int counter = 0;
-        var dispatcher = new ThrottleDispatcher<int>(100, true);
+        var dispatcher = new ThrottleDispatcher<int>(TimeSpan.FromMilliseconds(100), true);
         DateTime startTime = DateTime.UtcNow;
         List<Task<int>> tasks = new List<Task<int>>();
         Func<Task<int>> functToInvoke = async () =>

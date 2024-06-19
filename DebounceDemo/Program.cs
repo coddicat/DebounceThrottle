@@ -1,7 +1,12 @@
 ﻿using DebounceThrottle;
 
+Console.WriteLine("Enter text and see debounce effect, press ESC to exit");
+
 string str = "";
-var debounceDispatcher = new DebounceDispatcher(500);
+using var debounceDispatcher = new DebounceDispatcher(
+    interval: TimeSpan.FromSeconds(1),
+    maxDelay: TimeSpan.FromSeconds(5));
+
 while (true)
 {
     var key = Console.ReadKey(true);
@@ -18,3 +23,7 @@ while (true)
         str = "";
     });
 }
+
+await debounceDispatcher.FlushAndDisposeAsync();
+
+Console.WriteLine("Finished");
