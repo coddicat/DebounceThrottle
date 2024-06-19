@@ -1,12 +1,11 @@
-﻿using System;
-namespace DebounceThrottle.Tests
+﻿namespace DebounceThrottle.Tests
 {
 	public class DebounceDispatcherTests
 	{
         [Fact]
         public async Task DebounceAsync_MultipleCallsWithinInterval_ExecutesFunctionOnce()
         {
-            var debounceDispatcher = new DebounceDispatcher<int>(100);
+            var debounceDispatcher = new DebounceDispatcher<int>(TimeSpan.FromMilliseconds(100));
             int counter = 0;
             Func<Task<int>> functToInvoke = async () =>
             {
@@ -29,7 +28,7 @@ namespace DebounceThrottle.Tests
         [Fact]
         public async Task DebounceAsync_MultipleCallsOutsideInterval_ExecutesFunctionMultipleTimes()
         {
-            var debounceDispatcher = new DebounceDispatcher<int>(100);
+            var debounceDispatcher = new DebounceDispatcher<int>(TimeSpan.FromMilliseconds(100));
             int counter = 0;
             Func<Task<int>> functToInvoke = async () =>
             {

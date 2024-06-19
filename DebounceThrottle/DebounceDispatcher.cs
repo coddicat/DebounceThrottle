@@ -13,8 +13,9 @@ namespace DebounceThrottle
         /// Debouncing the execution of asynchronous tasks.
         /// It ensures that a function is invoked only once within a specified interval, even if multiple invocations are requested.
         /// </summary>
-        /// <param name="interval">The minimum interval in milliseconds between invocations of the debounced function.</param>
-        public DebounceDispatcher(int interval) : base(interval)
+        /// <param name="interval">The minimum interval between invocations of the debounced function.</param>
+        /// <param name="maxDelay">The maximum delay for an execution since the first trigger, after which the action must be executed. Can be null.</param>
+        public DebounceDispatcher(TimeSpan interval, TimeSpan? maxDelay = null) : base(interval, maxDelay)
         {
         }
 

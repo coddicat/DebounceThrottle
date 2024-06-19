@@ -11,7 +11,11 @@ Show entered text after stopping pressing keys for 1000 milliseconds
         static void Main(string[] args)
         {
             string str = "";
-            var debounceDispatcher = new DebounceDispatcher(1000);
+            
+            using var debounceDispatcher = new DebounceDispatcher(
+                interval: TimeSpan.FromSeconds(1), 
+                maxDelay: TimeSpan.FromSeconds(5));
+
             while(true)
             {
                 var key = Console.ReadKey(true);
@@ -28,6 +32,8 @@ Show entered text after stopping pressing keys for 1000 milliseconds
                     str = "";
                 });
             }
+
+            await debounceDispatcher.FlushAndDisposeAsync();
         }
     }
 ```
@@ -43,7 +49,7 @@ Call action every 100 milliseconds but invoke only once in 1000 milliseconds (af
             //trigger when to stop and exit
             Task.Run(() => { Console.ReadKey(true); stop = true; });
 
-            var throttleDispatcher = new ThrottleDispatcher(1000);
+            using var throttleDispatcher = new ThrottleDispatcher(TimeSpan.FromSeconds(1));
             do
             {
                 //every iteration call dispatcher but the Action will be invoked only once in 1500 milliseconds (500 action work time + 1000 interval)
@@ -57,6 +63,7 @@ Call action every 100 milliseconds but invoke only once in 1000 milliseconds (af
                 Thread.Sleep(100);
             }
             while (!stop); //wait trigger to stop and exit
+            
         }
     }
 ```
